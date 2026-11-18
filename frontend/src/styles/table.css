@@ -72,6 +72,19 @@
   background: var(--color-bg);
 }
 
+/* Live event highlights (3 seconds); declared after :hover so they win. */
+.reviews-table tbody tr.row-created {
+  background: #dcfce7;
+}
+
+.reviews-table tbody tr.row-updated {
+  background: #dbeafe;
+}
+
+.reviews-table tbody tr.row-deleted {
+  background: #fee2e2;
+}
+
 .reviews-table .number-cell {
   width: 56px;
   color: var(--color-muted);

@@ -1,11 +1,16 @@
 import { Link, Route, Routes } from 'react-router-dom';
 import { restoreReview } from './api/reviewsApi.js';
 import Snackbar from './components/Snackbar.jsx';
+import { useReviews } from './hooks/useReviews.js';
 import { useSnackbar } from './hooks/useSnackbar.js';
 import ReviewFormPage from './pages/ReviewFormPage.jsx';
 import ReviewsListPage from './pages/ReviewsListPage.jsx';
 
 export default function App() {
+  // Lives here (not in the list page) so a single websocket stays open
+  // while navigating, and the list can show highlights for changes
+  // made on the form pages.
+  const { reviews, highlights, loading, error } = useReviews();
   const { snackbar, show, dismiss } = useSnackbar();
 
   const handleDeleted = (review) => show({ message: 'Review deleted', review });
@@ -37,7 +42,15 @@ export default function App() {
         <Routes>
           <Route
             path="/"
-            element={<ReviewsListPage onDeleted={handleDeleted} />}
+            element={
+              <ReviewsListPage
+                reviews={reviews}
+                highlights={highlights}
+                loading={loading}
+                error={error}
+                onDeleted={handleDeleted}
+              />
+            }
           />
           <Route path="/new" element={<ReviewFormPage />} />
           <Route

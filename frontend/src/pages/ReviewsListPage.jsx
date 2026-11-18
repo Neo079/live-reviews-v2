@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { deleteReview } from '../api/reviewsApi.js';
 import ReviewsTable from '../components/ReviewsTable.jsx';
-import { useReviews } from '../hooks/useReviews.js';
 import {
   DEFAULT_SORT,
   filterReviews,
@@ -10,11 +9,15 @@ import {
   sortReviews,
 } from '../utils/reviewList.js';
 
-export default function ReviewsListPage({ onDeleted }) {
-  const { reviews, loading, error } = useReviews();
+export default function ReviewsListPage({
+  reviews,
+  highlights,
+  loading,
+  error,
+  onDeleted,
+}) {
   const [deleteError, setDeleteError] = useState(null);
   const [query, setQuery] = useState('');
-
   const [sort, setSort] = useState(DEFAULT_SORT);
 
   const visibleReviews = useMemo(
@@ -22,7 +25,7 @@ export default function ReviewsListPage({ onDeleted }) {
     [reviews, query, sort],
   );
 
-  // The row disappears through the websocket "deleted" event.
+  // The row is removed through the websocket "deleted" event.
   const handleDelete = (review) => {
     setDeleteError(null);
     deleteReview(review.id)
@@ -65,6 +68,7 @@ export default function ReviewsListPage({ onDeleted }) {
       {visibleReviews.length > 0 && (
         <ReviewsTable
           reviews={visibleReviews}
+          highlights={highlights}
           sort={sort}
           onSort={(key) => setSort((current) => nextSort(current, key))}
           onDelete={handleDelete}

@@ -159,6 +159,11 @@ h2 {
   background: var(--color-surface-muted);
 }
 
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .button:focus-visible {
   outline: none;
   box-shadow: var(--focus-ring);

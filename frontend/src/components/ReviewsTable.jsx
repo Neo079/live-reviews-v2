@@ -4,7 +4,13 @@ import { formatDateTime } from '../utils/reviewList.js';
 const ARIA_SORT = { asc: 'ascending', desc: 'descending' };
 const ARROW = { asc: '▲', desc: '▼' };
 
-export default function ReviewsTable({ reviews, sort, onSort, onDelete }) {
+export default function ReviewsTable({
+  reviews,
+  highlights,
+  sort,
+  onSort,
+  onDelete,
+}) {
   const renderSortHeader = (key, label) => {
     const active = sort.key === key;
     return (
@@ -38,7 +44,12 @@ export default function ReviewsTable({ reviews, sort, onSort, onDelete }) {
         </thead>
         <tbody>
           {reviews.map((review, index) => (
-            <tr key={review.id}>
+            <tr
+              key={review.id}
+              className={
+                highlights[review.id] ? `row-${highlights[review.id]}` : ''
+              }
+            >
               <td className="number-cell">{index + 1}</td>
               <td className="title-cell">{review.title}</td>
               <td>
@@ -54,6 +65,7 @@ export default function ReviewsTable({ reviews, sort, onSort, onDelete }) {
                 <button
                   className="button button-small button-danger"
                   type="button"
+                  disabled={highlights[review.id] === 'deleted'}
                   onClick={() => onDelete(review)}
                 >
                   Delete
