@@ -1,0 +1,2 @@
+# Always check files out with LF so Prettier (endOfLine: lf) passes on Windows too.
+* text=auto eol=lf
