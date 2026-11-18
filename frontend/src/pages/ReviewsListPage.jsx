@@ -10,7 +10,7 @@ import {
   sortReviews,
 } from '../utils/reviewList.js';
 
-export default function ReviewsListPage() {
+export default function ReviewsListPage({ onDeleted }) {
   const { reviews, loading, error } = useReviews();
   const [deleteError, setDeleteError] = useState(null);
   const [query, setQuery] = useState('');
@@ -25,7 +25,9 @@ export default function ReviewsListPage() {
   // The row disappears through the websocket "deleted" event.
   const handleDelete = (review) => {
     setDeleteError(null);
-    deleteReview(review.id).catch((err) => setDeleteError(err.message));
+    deleteReview(review.id)
+      .then(onDeleted)
+      .catch((err) => setDeleteError(err.message));
   };
 
   return (

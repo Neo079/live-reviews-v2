@@ -9,7 +9,7 @@ import {
 import ReviewForm from '../components/ReviewForm.jsx';
 
 /** Serves both /new (no id) and /:id (edit) with the same form. */
-export default function ReviewFormPage() {
+export default function ReviewFormPage({ onDeleted }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const [review, setReview] = useState(null);
@@ -43,7 +43,7 @@ export default function ReviewFormPage() {
   const handleDelete = async () => {
     setError(null);
     try {
-      await deleteReview(id);
+      onDeleted(await deleteReview(id));
       goToList();
     } catch (err) {
       setError(err.message);
