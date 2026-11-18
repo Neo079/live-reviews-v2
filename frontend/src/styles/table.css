@@ -1,0 +1,77 @@
+.table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  box-shadow: var(--shadow);
+}
+
+.reviews-table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+}
+
+.reviews-table th,
+.reviews-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.reviews-table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background: var(--color-surface-muted);
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.reviews-table tbody tr {
+  transition: background 0.15s;
+}
+
+.reviews-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.reviews-table tbody tr:hover {
+  background: var(--color-bg);
+}
+
+.reviews-table .number-cell {
+  width: 56px;
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.reviews-table .title-cell {
+  min-width: 140px;
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.reviews-table .date-cell {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.reviews-table .action-cell {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.content-cell {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  color: var(--color-text-soft);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
