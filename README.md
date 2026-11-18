@@ -1,5 +1,5 @@
 # Live Reviews
-
+By - Pratham Pagar
 A small full-stack app for adding, editing and removing reviews, with a list that updates **live** across every open browser tab through WebSockets.
 
 - **Backend:** Node.js, Express, `ws`, SQLite (Node's built-in `node:sqlite`)
