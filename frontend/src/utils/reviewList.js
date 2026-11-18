@@ -20,5 +20,16 @@ export function applyEvent(reviews, { type, review }) {
   }
 }
 
-export const formatDateTime = (isoString) =>
+/** Case-insensitive search over title and content. */
+export function filterReviews(reviews, query) {
+  const term = query.trim().toLowerCase();
+  if (!term) return reviews;
+  return reviews.filter(
+    ({ title, content }) =>
+      title.toLowerCase().includes(term) ||
+      content.toLowerCase().includes(term),
+  );
+}
+
+export const formatDateTime =(isoString) =>
   new Date(isoString).toLocaleString();
