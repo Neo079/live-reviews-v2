@@ -25,4 +25,4 @@ export const updateReview = (id, review) =>
 // Re-creates a deleted review with its original id and timestamp (undo).
 export const restoreReview = (review) =>
   request('/restore', { method: 'POST', body: review });
-export const deleteReview =(id) => request(`/${id}`, { method: 'DELETE' });
+export const deleteReview = (id) => request(`/${id}`, { method: 'DELETE' });

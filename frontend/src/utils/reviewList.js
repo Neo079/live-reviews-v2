@@ -58,5 +58,5 @@ export function sortReviews(reviews, { key, direction }) {
   );
 }
 
-export const formatDateTime =(isoString) =>
+export const formatDateTime = (isoString) =>
   new Date(isoString).toLocaleString();

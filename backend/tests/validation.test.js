@@ -7,7 +7,10 @@ import {
 
 describe('validateReviewInput', () => {
   it('trims title and content', () => {
-    const { value } = validateReviewInput({ title: ' Hi ', content: ' there ' });
+    const { value } = validateReviewInput({
+      title: ' Hi ',
+      content: ' there ',
+    });
     assert.deepEqual(value, { title: 'Hi', content: 'there' });
   });
 
