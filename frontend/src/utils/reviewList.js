@@ -31,5 +31,32 @@ export function filterReviews(reviews, query) {
   );
 }
 
+export const DEFAULT_SORT = { key: 'dateTime', direction: 'desc' };
+
+// Direction used the first time a column is selected.
+const INITIAL_DIRECTION = { title: 'asc', dateTime: 'desc' };
+
+/** Returns the sort state after the user clicks the header of `key`. */
+export function nextSort(current, key) {
+  if (current.key === key) {
+    return { key, direction: current.direction === 'asc' ? 'desc' : 'asc' };
+  }
+  return { key, direction: INITIAL_DIRECTION[key] };
+}
+
+/** Returns a sorted copy by title or dateTime; ties fall back to newest first. */
+export function sortReviews(reviews, { key, direction }) {
+  const compare =
+    key === 'title'
+      ? (a, b) =>
+          a.title.localeCompare(b.title, undefined, { sensitivity: 'base' })
+      : (a, b) => a.dateTime.localeCompare(b.dateTime);
+  const sign = direction === 'asc' ? 1 : -1;
+
+  return [...reviews].sort(
+    (a, b) => sign * compare(a, b) || byNewestFirst(a, b),
+  );
+}
+
 export const formatDateTime =(isoString) =>
   new Date(isoString).toLocaleString();

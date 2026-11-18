@@ -3,16 +3,23 @@ import { Link } from 'react-router-dom';
 import { deleteReview } from '../api/reviewsApi.js';
 import ReviewsTable from '../components/ReviewsTable.jsx';
 import { useReviews } from '../hooks/useReviews.js';
-import { filterReviews } from '../utils/reviewList.js';
+import {
+  DEFAULT_SORT,
+  filterReviews,
+  nextSort,
+  sortReviews,
+} from '../utils/reviewList.js';
 
 export default function ReviewsListPage() {
   const { reviews, loading, error } = useReviews();
   const [deleteError, setDeleteError] = useState(null);
   const [query, setQuery] = useState('');
 
+  const [sort, setSort] = useState(DEFAULT_SORT);
+
   const visibleReviews = useMemo(
-    () => filterReviews(reviews, query),
-    [reviews, query],
+    () => sortReviews(filterReviews(reviews, query), sort),
+    [reviews, query, sort],
   );
 
   // The row disappears through the websocket "deleted" event.
@@ -54,7 +61,12 @@ export default function ReviewsListPage() {
         <p className="status">No reviews match your search.</p>
       )}
       {visibleReviews.length > 0 && (
-        <ReviewsTable reviews={visibleReviews} onDelete={handleDelete} />
+        <ReviewsTable
+          reviews={visibleReviews}
+          sort={sort}
+          onSort={(key) => setSort((current) => nextSort(current, key))}
+          onDelete={handleDelete}
+        />
       )}
     </section>
   );

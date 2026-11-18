@@ -1,16 +1,37 @@
 import { Link } from 'react-router-dom';
 import { formatDateTime } from '../utils/reviewList.js';
 
-export default function ReviewsTable({ reviews, onDelete }) {
+const ARIA_SORT = { asc: 'ascending', desc: 'descending' };
+const ARROW = { asc: '▲', desc: '▼' };
+
+export default function ReviewsTable({ reviews, sort, onSort, onDelete }) {
+  const renderSortHeader = (key, label) => {
+    const active = sort.key === key;
+    return (
+      <th aria-sort={active ? ARIA_SORT[sort.direction] : 'none'}>
+        <button
+          className={active ? 'sort-button sort-active' : 'sort-button'}
+          type="button"
+          onClick={() => onSort(key)}
+        >
+          {label}
+          <span className="sort-arrow" aria-hidden="true">
+            {active ? ARROW[sort.direction] : '↕'}
+          </span>
+        </button>
+      </th>
+    );
+  };
+
   return (
     <div className="table-wrapper">
       <table className="reviews-table">
         <thead>
           <tr>
             <th>#</th>
-            <th>Title</th>
+            {renderSortHeader('title', 'Title')}
             <th>Content</th>
-            <th>Date-time</th>
+            {renderSortHeader('dateTime', 'Date-time')}
             <th>Edit</th>
             <th>Delete</th>
           </tr>
